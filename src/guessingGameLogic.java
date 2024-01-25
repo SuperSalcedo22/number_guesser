@@ -1,6 +1,6 @@
 import java.util.Scanner;
 import java.util.ArrayList;
-public class guessingGame {
+public class guessingGameLogic {
 
     public static void guessingNumberGame(Scanner scanner, int gamesWon) {
 
