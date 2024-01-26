@@ -1,6 +1,8 @@
+package terminal;
+
 import java.util.Scanner;
 import java.util.ArrayList;
-public class guessingGameLogic {
+public class guessingGameTerminalVersion {
 
     public static void guessingNumberGame(Scanner scanner, int gamesWon) {
 
