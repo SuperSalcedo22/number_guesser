@@ -9,7 +9,7 @@ import java.text.NumberFormat;
 public class gameGUI extends JFrame {
 
     public JTextField enteredName;
-    private JLabel guessText, guessHistory;
+    private JLabel guessText, guessHistory, gameOverMsg, previousGuessesMsg;
     private JFormattedTextField numberGuess;
     public gameLogic game;
     private int guessValue;
@@ -21,6 +21,10 @@ public class gameGUI extends JFrame {
         JPanel startPanel = new JPanel();
         JPanel playPanel = new JPanel();
         JPanel gameOverPanel = new JPanel();
+        JPanel gameStatsPanel = new JPanel();
+
+        // create instance of the game
+        game = new gameLogic();
 
         // variables for the frame/window
         setTitle("Number guessing game");
@@ -71,14 +75,6 @@ public class gameGUI extends JFrame {
         JButton nameSubmit = new JButton("Submit");
         nameSubmit.setPreferredSize(new Dimension(200,20));
         startPanel.add(nameSubmit,gbc);
-        nameSubmit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                game.startNewGame();
-                cardLayout.show(cardPanel, "Panel2");
-                guessText.setText("Guess the number " + enteredName.getText()+"!");
-            }
-        });
 
         // variables for the playPanel
         playPanel.setLayout(new GridBagLayout());
@@ -136,7 +132,7 @@ public class gameGUI extends JFrame {
         gbc_over.gridx=0;
         gbc_over.anchor = GridBagConstraints.CENTER;
         gbc_over.gridy=0;
-        JLabel gameOverMsg = new JLabel("Place holder game over message");
+        gameOverMsg = new JLabel("Place holder game over message");
         gameOverMsg.setFont(new Font("Helvetica",Font.BOLD,24));
         gameOverMsg.setForeground(Color.GREEN);
         gameOverMsg.setHorizontalAlignment(JLabel.CENTER);
@@ -146,7 +142,7 @@ public class gameGUI extends JFrame {
 
         // previous guesses
         gbc_over.gridy=1;
-        JLabel previousGuessesMsg = new JLabel("All guesses placeholder");
+        previousGuessesMsg = new JLabel("All guesses placeholder");
         previousGuessesMsg.setFont(new Font("Cambria",Font.PLAIN,20));
         previousGuessesMsg.setForeground(Color.GREEN);
         previousGuessesMsg.setHorizontalAlignment(JLabel.CENTER);
@@ -179,17 +175,91 @@ public class gameGUI extends JFrame {
         endGame.setPreferredSize(new Dimension(90,20));
         gameOverPanel.add(endGame,gbc_over);
 
+        // final page before game ends
+        gameStatsPanel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc_end = new GridBagConstraints();
+        gameStatsPanel.setBackground(Color.black);
+
+        // title label
+        gbc_end.gridx=0;
+        gbc_end.anchor = GridBagConstraints.CENTER;
+        gbc_end.gridy=0;
+        gameOverMsg = new JLabel("Game stats for: "+enteredName.getText());
+        gameOverMsg.setFont(new Font("Helvetica",Font.BOLD,24));
+        gameOverMsg.setForeground(Color.GREEN);
+        gameOverMsg.setHorizontalAlignment(JLabel.CENTER);
+        gameOverMsg.setVerticalAlignment(JLabel.CENTER);
+        gameOverMsg.setPreferredSize(new Dimension(600,50));
+        gameStatsPanel.add(gameOverMsg,gbc_end);
+
+        // games played
+        gbc_end.gridy=1;
+        JLabel gamesPlayedMsg = new JLabel("Games played: "+game.gamesPlayed);
+        gamesPlayedMsg.setFont(new Font("Cambria",Font.PLAIN,20));
+        gamesPlayedMsg.setForeground(Color.GREEN);
+        gamesPlayedMsg.setHorizontalAlignment(JLabel.CENTER);
+        gamesPlayedMsg.setVerticalAlignment(JLabel.CENTER);
+        gamesPlayedMsg.setPreferredSize(new Dimension(600,50));
+        gameStatsPanel.add(gamesPlayedMsg,gbc_end);
+
+        // games won
+        gbc_end.gridy=2;
+        gbc_end.insets = new Insets(0,0,10,0);
+        JLabel gamesWonMsg = new JLabel("Games won: "+game.gamesWon);
+        gamesWonMsg.setFont(new Font("Cambria",Font.PLAIN,20));
+        gamesWonMsg.setForeground(Color.GREEN);
+        gamesWonMsg.setHorizontalAlignment(JLabel.CENTER);
+        gamesWonMsg.setVerticalAlignment(JLabel.CENTER);
+        gamesWonMsg.setPreferredSize(new Dimension(600,25));
+        gameStatsPanel.add(gamesWonMsg,gbc_end);
+
+        // exit games button
+        gbc_end.gridy=3;
+        JButton endGameButton = new JButton("Exit game");
+        endGameButton.setPreferredSize(new Dimension(200,20));
+        gameStatsPanel.add(endGameButton,gbc_end);
+
+        // create the action listener that starts the game
+        ActionListener startGuessingGame = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                game.startNewGame();
+                cardLayout.show(cardPanel, "Panel2");
+                guessText.setText("Guess the number " + enteredName.getText()+"!");
+                numberGuess.setText("");
+                guessHistory.setText("It is an integer between 0-100");
+            }
+        };
+
+        // assigns the listener to the 2 buttons
+        nameSubmit.addActionListener(startGuessingGame);
+        playAgain.addActionListener(startGuessingGame);
+
+        // stops playing the game and shows the final screen
+        endGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                cardLayout.show(cardPanel, "Panel4");
+            }
+        });
+
+        endGameButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                System.exit(0);
+            }
+        });
+
         // adding the individual panels to the card panel
         cardPanel.add(startPanel, "Panel1");
         cardPanel.add(playPanel,"Panel2");
         cardPanel.add(gameOverPanel,"Panel3");
+        cardPanel.add(gameStatsPanel,"Panel4");
         // adding the card panel to the frame
         add(cardPanel);
 
         // setting the frame to be visible and creating an object of the game
         setVisible(true);
-        game = new gameLogic();
-
     }
 
     private void submitGuess() {
@@ -209,17 +279,15 @@ public class gameGUI extends JFrame {
         // if game over, switch to the game over panel, otherwise continue
         if (game.remainingTries==0) {
             // switch to the game over panel when there's no more tries
+            gameOverMsg.setText(result);
             cardLayout.show(cardPanel, "Panel3");
+            previousGuessesMsg.setText("Previous guesses " + game.previousGuesses.toString());
         } else {
             // shows on the screen if the person is correct or not
             guessText.setText(result);
             // displays the previous guesses to the user
             guessHistory.setText("Previous guesses " + game.previousGuesses.toString());
         }
-    }
-
-    private void genericPanelMaker() {
-        // will be used as a method to create panels with less code
     }
 
     public static void main(String[] args) {
