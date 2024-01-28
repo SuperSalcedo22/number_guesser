@@ -7,6 +7,7 @@ import java.text.NumberFormat;
 public class customPanel extends JPanel {
 
     private final JButton ButtonSubmit;
+    private JButton buttonYes;
     private final JLabel TitleLabel;
     private final JLabel SubTitleLabel;
     private final JLabel ThirdTextLabel;
@@ -33,9 +34,9 @@ public class customPanel extends JPanel {
         ThirdTextLabel=setLabel(thirdText, "Cambria", Font.PLAIN, 20);
         add(ThirdTextLabel,gbc,2);
 
+        // the 4th object in the panel
         gbc.gridy=3;
         gbc.insets = new Insets(0,0,10,0);
-
         // variable special used to determine the 4th object in the GUI
         if (special) {
             // special creates input format that limits it to numbers
@@ -47,7 +48,7 @@ public class customPanel extends JPanel {
             add(specialInputField,gbc);
         } else {
             // otherwise create a button
-            JButton buttonYes = new JButton("Yes");
+            buttonYes = new JButton("Yes");
             buttonYes.setPreferredSize(new Dimension(200,30));
             add(buttonYes,gbc);
         }
@@ -71,15 +72,20 @@ public class customPanel extends JPanel {
         return label;
     }
 
-    // allows the button to be called from the panel to assign methods to them
+    // get the panel variables to be used
     public JButton getSubmitButton() {
         return ButtonSubmit;
+    }
+
+    public JButton getButtonYes() {
+        return buttonYes;
     }
 
     public String getSubmission() {
         return specialInputField.getText();
     }
 
+    // change the value of specific labels on the panel
     public void setTitleText(String text) {
         TitleLabel.setText(text);
     }

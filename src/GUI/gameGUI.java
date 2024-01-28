@@ -8,7 +8,8 @@ public class gameGUI extends JFrame {
     public JPanel cardPanel;
     public CardLayout cardLayout;
     public customPanel startPanel;
-    private gameLogic game;
+    public customPanel gameOverPanel;
+    public gameLogic game;
 
     public gameGUI() {
 
@@ -24,6 +25,7 @@ public class gameGUI extends JFrame {
         cardLayout = new CardLayout();
         cardPanel = new JPanel(cardLayout);
 
+        // creating the panels
         startPanel = new customPanel(
                 "Guess the number",
                 "Its an integer between 0-100",
@@ -32,19 +34,23 @@ public class gameGUI extends JFrame {
                 "Submit"
         );
 
-        customPanel gameOverPanel = new customPanel(
-                "Game over, you ran out of tries",
+        gameOverPanel = new customPanel(
+                "Game over, you couldn't guess "+game.getRandomNumber(),
                 "Previous guesses: "+game.previousGuesses,
                 "Would you like to play again?",
                 false,
                 "No"
         );
 
-        //add an action listener to the submit button
+        //add an action listener to the submit button on the start panel to check the guess
         startPanel.getSubmitButton().addActionListener(actionEvent -> {
             System.out.println("This works");
             accessNumberGuess();
+            startPanel.resetSpecialInputText();
         });
+
+        // add an action listener on submit button on the final panel to restart the game
+        gameOverPanel.getButtonYes().addActionListener(actionEvent -> startNewGame());
 
         // add an action listener to the no button to exit the game
         gameOverPanel.getSubmitButton().addActionListener( actionEvent -> System.exit(0));
@@ -62,25 +68,48 @@ public class gameGUI extends JFrame {
     // function linked to submit button to process the users input
     private void accessNumberGuess() {
         int guessValue;
+        String guessString=startPanel.getSubmission();
         // attempt to get the value of the input and turn it into an integer, otherwise make 0
         try {
-            guessValue = Integer.parseInt(startPanel.getSubmission());
+            guessValue = Integer.parseInt(guessString);
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "Invalid input, setting to 0");
             guessValue = 0;
         }
+        System.out.print(guessString);
 
         // gets the values and uses them to replace the values on the panel
         String result = game.checkGuess(guessValue);
         startPanel.setTitleText(result);
         startPanel.setSubtitleText("Previous guesses: "+game.previousGuesses);
         startPanel.setThirdText("You have "+game.remainingTries+" attempts remaining");
-        startPanel.resetSpecialInputText();
 
         // test to see if the game is ended or not
-        if (game.remainingTries==0) {
-            cardLayout.show(cardPanel,"Panel2");
+        if (game.gameWon) {
+            switchToFinalScreen();
+            startPanel.setTitleText(result);
+        } else if(game.remainingTries==0) {
+            switchToFinalScreen();
         }
+    }
+
+    public void startNewGame() {
+        // Resets the game state to allow another game to be played
+        game.startNewGame();
+
+        // Update the UI to when it was first generated
+        cardLayout.show(cardPanel, "Panel1");
+        startPanel.setTitleText("Guess the number");
+        startPanel.setSubtitleText("Its an integer between 0-100");
+        startPanel.setThirdText("You have " + game.remainingTries + " attempts remaining");
+        startPanel.resetSpecialInputText();
+    }
+
+    public void switchToFinalScreen () {
+        // open the final panel
+        cardLayout.show(cardPanel,"Panel2");
+        gameOverPanel.setSubtitleText("Previous guesses: "+game.previousGuesses);
+        gameOverPanel.setThirdText("Play again?");
     }
 
     public static void main(String[] args) {
