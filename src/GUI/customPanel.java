@@ -2,7 +2,6 @@ package GUI;
 
 import javax.swing.*;
 import java.awt.*;
-import java.text.NumberFormat;
 
 public class customPanel extends JPanel {
 
@@ -11,7 +10,7 @@ public class customPanel extends JPanel {
     private final JLabel TitleLabel;
     private final JLabel SubTitleLabel;
     private final JLabel ThirdTextLabel;
-    private JFormattedTextField specialInputField;
+    private JTextField specialInputField;
 
     public customPanel(String Title, String subtitle, String thirdText, boolean special, String button2Text) {
         // variables for the panel
@@ -39,9 +38,8 @@ public class customPanel extends JPanel {
         gbc.insets = new Insets(0,0,10,0);
         // variable special used to determine the 4th object in the GUI
         if (special) {
-            // special creates input format that limits it to numbers
-            NumberFormat integerFormat = NumberFormat.getIntegerInstance();
-            specialInputField = new JFormattedTextField(integerFormat);
+            // input field that allow the user to guess
+            specialInputField = new JTextField();
             specialInputField.setColumns(10);
             specialInputField.setFont(new Font("Cambria",Font.PLAIN,25));
             specialInputField.setPreferredSize(new Dimension(200,30));
@@ -72,7 +70,7 @@ public class customPanel extends JPanel {
         return label;
     }
 
-    // get the panel variables to be used
+    // methods that get the panel variables to be used
     public JButton getSubmitButton() {
         return ButtonSubmit;
     }
@@ -85,7 +83,7 @@ public class customPanel extends JPanel {
         return specialInputField.getText();
     }
 
-    // change the value of specific labels on the panel
+    // methods that change the value of specific labels on the panel
     public void setTitleText(String text) {
         TitleLabel.setText(text);
     }

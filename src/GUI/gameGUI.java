@@ -65,7 +65,7 @@ public class gameGUI extends JFrame {
         setVisible(true);
     }
 
-    // function linked to submit button to process the users input
+    // method linked to submit button to process the users input
     private void accessNumberGuess() {
         int guessValue;
         String guessString=startPanel.getSubmission();
@@ -76,7 +76,6 @@ public class gameGUI extends JFrame {
             JOptionPane.showMessageDialog(null, "Invalid input, setting to 0");
             guessValue = 0;
         }
-        System.out.print(guessString);
 
         // gets the values and uses them to replace the values on the panel
         String result = game.checkGuess(guessValue);
@@ -87,7 +86,7 @@ public class gameGUI extends JFrame {
         // test to see if the game is ended or not
         if (game.gameWon) {
             switchToFinalScreen();
-            startPanel.setTitleText(result);
+            gameOverPanel.setTitleText(result);
         } else if(game.remainingTries==0) {
             switchToFinalScreen();
         }
@@ -103,8 +102,12 @@ public class gameGUI extends JFrame {
         startPanel.setSubtitleText("Its an integer between 0-100");
         startPanel.setThirdText("You have " + game.remainingTries + " attempts remaining");
         startPanel.resetSpecialInputText();
+
+        // reset the gameOverPanel to show the new generated number
+        gameOverPanel.setTitleText("Game over, you couldn't guess "+game.getRandomNumber());
     }
 
+    // method that switches to the gameOverPanel when the condition is met
     public void switchToFinalScreen () {
         // open the final panel
         cardLayout.show(cardPanel,"Panel2");

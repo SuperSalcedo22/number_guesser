@@ -19,7 +19,7 @@ public class gameLogic {
 
     public String checkGuess(int userGuess) {
 
-        // reduce the number of tries left and add it to the arraylist
+        // reduce the number of tries left and add the guess to the arraylist
         remainingTries--;
         previousGuesses.add(userGuess);
 
