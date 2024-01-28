@@ -19,14 +19,14 @@ public class gameLogic {
         previousGuesses = new ArrayList<>();
     }
 
-    public String checkGuess(int userGuess, String userName) {
+    public String checkGuess(int userGuess) {
         remainingTries--;
         previousGuesses.add(userGuess);
 
         // checks if the guess is correct or not
         if (userGuess == randomNumber) {
             gamesWon++;
-            return "Congratulations, " + userName + "! Your guess is correct.";
+            return "Congratulations! Your guess is correct.";
         } else if (remainingTries == 0) {
             return "You ran out of tries. It was " + randomNumber;
         } else if (userGuess < randomNumber) {
