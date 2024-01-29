@@ -31,3 +31,5 @@ Running the GUI and guessing game
 
 ### Screenshots
 - Preview layouts of GUI
+
+![alt text](https://github.com/SuperSalcedo22/number_guesser/blob/master/play_panel.png "Play Panel")
