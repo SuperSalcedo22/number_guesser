@@ -6,11 +6,14 @@ public class gameLogic {
     private int randomNumber;
     public int remainingTries;
     public boolean gameWon;
+    public int numberOfGamesWon;
+    public int numberOfGamesPlayed;
     public ArrayList<Integer> previousGuesses;
 
     public void startNewGame() {
         // Generate a random number between 1 and 100
         randomNumber = 1+(int)(100*Math.random()); //random number from 1-100
+        numberOfGamesPlayed++;
         System.out.print("The number is: "+randomNumber);
         remainingTries = 5;
         // stores the previous guesses
@@ -26,6 +29,7 @@ public class gameLogic {
         // checks if the guess is correct or not
         if (userGuess == randomNumber) {
             gameWon=true;
+            numberOfGamesWon++;
             return "Congratulations! Your guess is correct.";
         } else if (remainingTries == 0) {
             return "You ran out of tries. It was " + randomNumber;

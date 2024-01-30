@@ -79,7 +79,9 @@ public class customPanel extends JPanel {
         return buttonYes;
     }
 
-    public String getSubmission() {
+    public JTextField getSpecialInputField() { return specialInputField;}
+
+    public String getSubmissionText() {
         return specialInputField.getText();
     }
 
@@ -98,5 +100,12 @@ public class customPanel extends JPanel {
 
     public void resetSpecialInputText() {
         specialInputField.setText("");
+    }
+
+    // removes the button for the game stats screen
+    public void removeButton() {
+        remove(buttonYes);
+        revalidate();
+        repaint();
     }
 }
