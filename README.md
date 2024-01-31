@@ -29,6 +29,11 @@ Running the gui and guessing game
 - Creating the JFrame for the gui and JPanels to run on
 - Card layout used for seamless transition between JPanels
 
+### Testing
+Unit test methods were created for the gameLogic class to learn JUnit testing 
+- Edge cases considered
+- Full coverage of all methods were ensured
+
 ### Screenshots
 - Preview layouts of gui
 
