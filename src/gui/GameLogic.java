@@ -1,8 +1,8 @@
-package GUI;
+package gui;
 
 import java.util.ArrayList;
 
-public class gameLogic {
+public class GameLogic {
     private int randomNumber;
     public int remainingTries;
     public boolean gameWon;
@@ -14,7 +14,6 @@ public class gameLogic {
         // Generate a random number between 1 and 100
         randomNumber = 1+(int)(100*Math.random()); //random number from 1-100
         numberOfGamesPlayed++;
-        System.out.print("The number is: "+randomNumber);
         remainingTries = 5;
         // stores the previous guesses
         previousGuesses = new ArrayList<>();

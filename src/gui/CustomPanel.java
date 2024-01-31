@@ -1,9 +1,9 @@
-package GUI;
+package gui;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class customPanel extends JPanel {
+public class CustomPanel extends JPanel {
 
     private final JButton ButtonSubmit;
     private JButton buttonYes;
@@ -12,7 +12,7 @@ public class customPanel extends JPanel {
     private final JLabel ThirdTextLabel;
     private JTextField specialInputField;
 
-    public customPanel(String Title, String subtitle, String thirdText, boolean special, String button2Text) {
+    public CustomPanel(String Title, String subtitle, String thirdText, boolean special, String button2Text) {
         // variables for the panel
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();

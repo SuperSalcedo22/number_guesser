@@ -1,4 +1,4 @@
-# Number guessing game with GUI
+# Number guessing game with gui
 Basic project to build and consolidate java programming skills
 
 
@@ -7,14 +7,14 @@ First iteration of the game using command line arguments
 - Scanner used to detect user input and handle any exceptions
 - Array list used to store previous guesses and display them to the user
 
-## GUI package
-Building upon the terminal version and creating a GUI that removes the command line interface 
-- Built using java swing as an introductory package to building GUI's  
+## gui package
+Building upon the terminal version and creating a gui that removes the command line interface 
+- Built using java swing as an introductory package to building gui's  
 
 ### Classes
-3 separate classes used to make the GUI
+3 separate classes used to make the gui
 #### gameLogic
-Adapting the terminal code to work within the GUI
+Adapting the terminal code to work within the gui
 - Mixture of public and private variables to hide values from different classes
 - Error handling wrong inputs by the user
 
@@ -25,11 +25,11 @@ Building upon standard JPanels to reduce redundant repetitive code when creating
 - Setter methods allow the panels to be edited from different scopes
 
 #### gameGUI
-Running the GUI and guessing game
-- Creating the JFrame for the GUI and JPanels to run on
+Running the gui and guessing game
+- Creating the JFrame for the gui and JPanels to run on
 - Card layout used for seamless transition between JPanels
 
 ### Screenshots
-- Preview layouts of GUI
+- Preview layouts of gui
 
 ![alt text](https://github.com/SuperSalcedo22/number_guesser/blob/master/play_panel.png "Play Panel")

@@ -1,23 +1,23 @@
-package GUI;
+package gui;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class gameGUI extends JFrame {
+public class GameGUI extends JFrame {
 
     public JPanel cardPanel;
     public CardLayout cardLayout;
-    public customPanel startPanel;
-    public customPanel playPanel;
-    public customPanel gameOverPanel;
-    public customPanel gameStatsPanel;
-    public gameLogic game;
+    public CustomPanel startPanel;
+    public CustomPanel playPanel;
+    public CustomPanel gameOverPanel;
+    public CustomPanel gameStatsPanel;
+    public GameLogic game;
     public String userName;
 
-    public gameGUI() {
+    public GameGUI() {
 
         // create instance of the game and start it
-        game = new gameLogic();
+        game = new GameLogic();
         game.startNewGame();
 
         // variables for the frame/window
@@ -29,7 +29,7 @@ public class gameGUI extends JFrame {
         cardPanel = new JPanel(cardLayout);
 
         // creating the panels
-        startPanel  = new customPanel(
+        startPanel  = new CustomPanel(
                 "Welcome to the number guessing game",
                 "Built by SuperSalcedo22",
                 "Please enter your name",
@@ -37,7 +37,7 @@ public class gameGUI extends JFrame {
                 "Submit"
         );
 
-        playPanel = new customPanel(
+        playPanel = new CustomPanel(
                 "Guess the number",
                 "Its an integer between 0-100",
                 "You have "+game.remainingTries+" attempts remaining",
@@ -45,7 +45,7 @@ public class gameGUI extends JFrame {
                 "Submit"
         );
 
-        gameOverPanel = new customPanel(
+        gameOverPanel = new CustomPanel(
                 "Game over, you couldn't guess "+game.getRandomNumber(),
                 "Previous guesses: "+game.previousGuesses,
                 "Would you like to play again?",
@@ -53,7 +53,7 @@ public class gameGUI extends JFrame {
                 "No"
         );
 
-        gameStatsPanel = new customPanel("Thanks for playing",
+        gameStatsPanel = new CustomPanel("Thanks for playing",
                 "Games played:",
                 "Games won:",
                 false,
@@ -159,6 +159,6 @@ public class gameGUI extends JFrame {
 
     public static void main(String[] args) {
         // starting the whole program
-        SwingUtilities.invokeLater(gameGUI::new);
+        SwingUtilities.invokeLater(GameGUI::new);
     }
 }
